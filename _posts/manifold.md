@@ -1,7 +1,7 @@
 ---
 title: '一份简短且混乱的流形导论'
 date: 2025-09-07
-permalink: /posts/2012/08/blog-post-1/
+permalink: /posts/manifold
 tags:
   - 数学：几何
   - 笔记
