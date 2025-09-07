@@ -1,7 +1,7 @@
 ---
 title: '一份简短且混乱的流形导论'
 date: 2025-09-06
-permalink: /posts/Manifolds/
+permalink: /posts/manifolds/
 tags:
   - cool posts
   - category1
