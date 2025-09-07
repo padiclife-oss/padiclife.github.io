@@ -43,434 +43,95 @@ tags:
 
 坐标变换描述了在重叠区域，从一个局部坐标系转换到另一个局部坐标系的规则，我们要求这个变换是光滑的，从而保证了在不同坐标系下进行微积分计算时不会产生矛盾，结果是良定的。
 
-## Tips and hints
+## 反函数定理和隐函数定理
 
-\(x_1,x_2,x_3\)
+好的，我们来详细回顾反函数定理和隐函数定理，并重点阐述它们在流形理论中的核心作用、几何意义以及如何为现代微分几何提供基石。
 
-* Name a file ".md" to have it render in markdown, name it ".html" to render in HTML.
-* Go to the [commit list](https://github.com/academicpages/academicpages.github.io/commits/master) (on your repo) to find the last version GitHub built with Jekyll. 
-  * Green check: successful build
-  * Orange circle: building
-  * Red X: error
-  * No icon: not built
+这两个定理是数学分析在几何学中的光辉典范，它们将局部可逆性的**微分条件**（即导数非奇异）转化为**几何结论**（即局部存在同胚或子流形结构）。
 
-* Academic Pages uses [Jekyll Kramdown](https://jekyllrb.com/docs/configuration/markdown/), GitHub Flavored Markdown (GFM) parser, which is similar to the version of Markdown used on GitHub, but may have some minor differences. 
-  * Some of emoji supported on GitHub should be supposed via the [Jemoji](https://github.com/jekyll/jemoji) plugin :computer:.
-  * The best list of the supported emoji can be found in the [Emojis for Jekyll via Jemoji](https://www.fabriziomusacchio.com/blog/2021-08-16-emojis_for_Jekyll/#computer) blog post.
-
-* While GitHub Pages prevents server side code from running, client-side scripts are supported.
-  * This means that Google Analytics is supported, and [the wiki](https://github.com/academicpages/academicpages.github.io/wiki/Adding-Google-Analytics) should contain the most up-to-date information on getting it working.
-
-* Your CV can be written using either Markdown ([preview](https://academicpages.github.io/cv/)) or generated via JSON ([preview](https://academicpages.github.io/cv-json/)) and the layouts are slightly different. You can update the path to the one being used in `_data/navigation.yml` with the JSON formatted CV being hidden by default.
-
- * The [Liquid syntax guide](https://shopify.github.io/liquid/tags/control-flow/) is a useful guide for those that want to add functionality to the template or to become contributors to the [template on GitHub](https://github.com/academicpages/academicpages.github.io).
-
-## MathJax 
-
-Support for MathJax (version 3.* via [jsDelivr](https://www.jsdelivr.com/), [documentation](https://docs.mathjax.org/en/latest/)) is included in the template:
-
-$$
-\displaylines{
-\nabla \cdot E= \frac{\rho}{\epsilon_0} \\\
-\nabla \cdot B=0 \\\
-\nabla \times E= -\partial_tB \\\
-\nabla \times B  = \mu_0 \left(J + \varepsilon_0 \partial_t E \right)
-}
-$$
-
-The default delimiters of `$$...$$` and `\\[...\\]` are supported for displayed mathematics, while `\\(...\\)` should be used for in-line mathematics (ex., \\(a^2 + b^2 = c^2\\))
-
-**Note** that since Academic Pages uses Markdown which cases some interference with MathJax and LaTeX for escaping characters and new lines, although [some workarounds exist](https://math.codidact.com/posts/278763/278772#answer-278772). In some cases, such as when you are including MathJax in a `citation` field for publications, it may be necessary to use `\(...\)` for inline delineation.
-
-## Mermaid diagrams
-Academic Pages includes support for [Mermaid diagrams](https://mermaid.js.org/) (version 11.* via [jsDelivr](https://www.jsdelivr.com/)) and in addition to their [tutorials](https://mermaid.js.org/ecosystem/tutorials.html) and [GitHub documentation](https://github.com/mermaid-js/mermaid) the basic syntax is as follows:
-
-```markdown
-    ```mermaid
-    graph LR
-    A-->B
-    ```
-```
-
-Which produces the following plot with the [default theme](https://mermaid.js.org/config/theming.html) applied:
-
-```mermaid
-graph LR
-A-->B
-```
-
-While a more advanced plot with the `forest` theme applied looks like the following:
-
-```mermaid
 ---
-config:
-  theme: 'forest'
+
+### 第一部分：反函数定理
+
+#### 1. 定理陈述（欧氏空间版本）
+
+设 \( U \subseteq \mathbb{R}^n \) 是一个开集，映射 \( F: U \to \mathbb{R}^n \) 是 \( C^r \) 类的（\( r \geq 1 \)）。如果在点 \( p \in U \) 处，其雅可比矩阵 \( DF(p) \) 是可逆的（即非奇异），那么：
+1.  存在 \( p \) 的一个开邻域 \( V \subseteq U \) 和 \( F(p) \) 的一个开邻域 \( W \subseteq \mathbb{R}^n \)。
+2.  映射 \( F: V \to W \) 是一个双射。
+3.  其逆映射 \( F^{-1}: W \to V \) 也是 \( C^r \) 类的。
+
+简言之，**在局部上，\( F \) 是一个 \( C^r \) 微分同胚**。
+
+#### 2. 几何意义与直观
+
+该定理表明，如果映射 \( F \) 在一点 \( p \) 的线性近似（由 \( DF(p) \) 给出）已经是可逆的（即一个线性同构），那么 \( F \) 本身在 \( p \) 的附近也保持着这种可逆性，并且是“光滑地”可逆。
+
+一个经典的类比是：如果你在一张橡胶 sheet 上画了一个小的坐标系网格，然后以**非退化**的方式（不将不同点挤压到一起）拉伸、扭曲它，那么在这个小网格的范围内，新旧坐标之间仍然存在一一对应的光滑关系。\( DF(p) \) 非奇异就保证了这种“非退化”的局部行为。
+
+#### 3. 在流形学中的应用
+
+反函数定理是**定义流形局部坐标卡的核心工具**。
+
+*   **如何构造坐标卡？** 一个 \( n \) 维流形 \( M \) 在点 \( p \) 附近的局部，看起来应该像 \( \mathbb{R}^n \) 的一个开集。我们通过**坐标图** \( (U, \phi) \) 来精确描述这种“像”，其中 \( \phi: U \to \mathbb{R}^n \) 是一个同胚。
+*   **定理的直接应用**：假设我们有一个映射 \( F: M \to \mathbb{R}^n \)。如果我们能证明在点 \( p \in M \) 处，\( F \) 的微分 \( dF_p: T_pM \to \mathbb{R}^n \) 是一个线性同构（即满秩为 \( n \)），那么根据反函数定理，存在 \( p \) 的邻域 \( V \)，使得 \( F|_V: V \to F(V) \) 是一个微分同胚。因此，**\( (V, F|_V) \) 就构成了 \( M \) 的一个合法的坐标卡**。
+*   **坐标变换**：流形需要不同的坐标卡，并且坐标变换（转移映射）必须是光滑的。如果 \( (U, \phi) \) 和 \( (V, \psi) \) 是两个坐标卡，且 \( U \cap V \neq \emptyset \)，那么转移映射 \( \psi \circ \phi^{-1} \) 是 \( \phi(U \cap V) \to \psi(U \cap V) \) 的映射。由于 \( \phi \) 和 \( \psi \) 都是局部微分同胚（由反函数定理保证），它们的复合和逆也是光滑的。因此，**反函数定理确保了流形坐标图册的光滑相容性**。
+
+**总结：反函数定理保证了我们可以用“好”的映射来为流形的局部建立坐标系，它是流形定义得以成立的基石。**
+
 ---
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
-
-## Plotly
-Academic Pages includes support for Plotly diagrams via a hook in the Markdown code elements, although those that are comfortable with HTML and JavaScript can also access it [via those routes](https://plotly.com/javascript/getting-started/).
-
-In order to render a Plotly plot via Markdown the relevant plot data need to be added as follows:
-
-```markdown
-    ```plotly
-    {
-      "data": [
-        {
-          "x": [1, 2, 3, 4],
-          "y": [10, 15, 13, 17],
-          "type": "scatter"
-        },
-        {
-          "x": [1, 2, 3, 4],
-          "y": [16, 5, 11, 9],
-          "type": "scatter"
-        }
-      ]
-    }
-    ```
-```
-
-**Important!** Since the data is parsed as JSON *all* of the keys will need to be quoted for the plot to render. The use of a tool like [JSONLint](https://jsonlint.com/) to check syntax is highly recommended.
-{: .notice}
-
-Which produces the following:
-```plotly
-{
-  "data": [
-    {
-      "x": [1, 2, 3, 4],
-      "y": [10, 15, 13, 17],
-      "type": "scatter"
-    },
-    {
-      "x": [1, 2, 3, 4],
-      "y": [16, 5, 11, 9],
-      "type": "scatter"
-    }
-  ]
-}
-```
-
-Essentially what is taking place is that the [Plotly attributes](https://plotly.com/javascript/reference/index/) are being taken from the code block as JSON data, parsed, and passed to Plotly along with a theme that matches the current site theme (i.e., a light theme, or a dark theme). This allows all plots that can be described via the `data` attribute to rendered with some limitations for the theme of the plot.
-
-```plotly
-{
-  "data": [
-    {
-      "x": [1, 2, 3, 4, 5],
-      "y": [1, 6, 3, 6, 1],
-      "mode": "markers",
-      "type": "scatter",
-      "name": "Team A",
-      "text": ["A-1", "A-2", "A-3", "A-4", "A-5"],
-      "marker": { "size": 12 }
-    },
-    {
-      "x": [1.5, 2.5, 3.5, 4.5, 5.5],
-      "y": [4, 1, 7, 1, 4],
-      "mode": "markers",
-      "type": "scatter",
-      "name": "Team B",
-      "text": ["B-a", "B-b", "B-c", "B-d", "B-e"],
-      "marker": { "size": 12 }
-    }    
-  ],
-  "layout": {
-    "xaxis": {
-      "range": [ 0.75, 5.25 ]
-    },
-    "yaxis": {
-      "range": [0, 8]
-    },
-    "title": {"text": "Data Labels Hover"}
-  }
-}
-```
-
-```plotly
-{
-  "data": [{
-      "x": [1, 2, 3],
-      "y": [4, 5, 6],
-      "type": "scatter"
-    },
-    {
-      "x": [20, 30, 40],
-      "y": [50, 60, 70],
-      "xaxis": "x2",
-      "yaxis": "y2",
-      "type": "scatter"
-  }],
-  "layout": {
-    "grid": {
-      "rows": 1,
-      "columns": 2,
-      "pattern": "independent"
-    },
-    "title": {
-      "text": "Simple Subplot"
-    }    
-  }
-}
-```
-
-```plotly
-{
-  "data": [{
-		"z": [[10, 10.625, 12.5, 15.625, 20],
-          [5.625, 6.25, 8.125, 11.25, 15.625],
-          [2.5, 3.125, 5.0, 8.125, 12.5],
-          [0.625, 1.25, 3.125, 6.25, 10.625],
-          [0, 0.625, 2.5, 5.625, 10]],
-		"type": "contour"
-	}],
-  "layout": {
-    "title": {
-      "text": "Basic Contour Plot"
-    }
-  }
-}
-```
-
-## Markdown guide
-
-Academic Pages uses [kramdown](https://kramdown.gettalong.org/index.html) for Markdown rendering, which has some differences from other Markdown implementations such as GitHub's. In addition to this guide, please see the [kramdown Syntax page](https://kramdown.gettalong.org/syntax.html) for full documentation.  
-
-### Header three
-
-#### Header four
-
-##### Header five
-
-###### Header six
-
-## Blockquotes
-
-Single line blockquote:
-
-> Quotes are cool.
-
-## Tables
 
-### Table 1
+### 第二部分：隐函数定理
 
-| Entry            | Item   |                                                              |
-| --------         | ------ | ------------------------------------------------------------ |
-| [John Doe](#)    | 2016   | Description of the item in the list                          |
-| [Jane Doe](#)    | 2019   | Description of the item in the list                          |
-| [Doe Doe](#)     | 2022   | Description of the item in the list                          |
+#### 1. 定理陈述（欧氏空间版本）
 
-### Table 2
+设 \( U \subseteq \mathbb{R}^{m+n} \) 是一个开集，映射 \( F: U \to \mathbb{R}^n \) 是 \( C^r \) 类的（\( r \geq 1 \)）。将 \( U \) 中的点写作 \( (x, y) \)，其中 \( x \in \mathbb{R}^m, y \in \mathbb{R}^n \)。假设在点 \( (a, b) \in U \) 处，满足 \( F(a, b) = 0 \)，且关于 \( y \) 的偏导数矩阵 \( D_yF(a, b) \) 是可逆的（即 \( n \times n \) 非奇异矩阵）。
 
-| Header1 | Header2 | Header3 |
-|:--------|:-------:|--------:|
-| cell1   | cell2   | cell3   |
-| cell4   | ce
-ll5   | cell6   |
-|-----------------------------|
-| cell1   | cell2   | cell3   |
-| cell4   | cell5   | cell6   |
-|=============================|
-| Foot1   | Foot2   | Foot3   |
+那么：
+1.  存在 \( a \) 在 \( \mathbb{R}^m \) 中的开邻域 \( V \) 和 \( b \) 在 \( \mathbb{R}^n \) 中的开邻域 \( W \)，以及一个唯一的 \( C^r \) 函数 \( f: V \to W \)。
+2.  使得 \( f(a) = b \)。
+3.  并且对于所有 \( x \in V \)，有 \( F(x, f(x)) = 0 \)。
 
-## Definition Lists
+换言之，方程 \( F(x, y) = 0 \) 在点 \( (a, b) \) 附近**唯一地确定了一个隐函数** \( y = f(x) \)。
 
-Definition List Title
-:   Definition list division.
+#### 2. 几何意义与直观
 
-Startup
-:   A startup company or startup is a company or temporary organization designed to search for a repeatable and scalable business model.
+该定理告诉我们，在满足非退化条件 \( (D_yF \neq 0) \) 的点附近，由方程 \( F(x, y) = 0 \) 所定义的“曲面”或“曲线”，可以**局部地**表示为一个**函数的图像** \( y = f(x) \)。这个图像是一个“非垂直”的图形（因为它是关于 \( x \) 的函数）。
 
-#dowork
-:   Coined by Rob Dyrdek and his personal body guard Christopher "Big Black" Boykins, "Do Work" works as a self motivator, to motivating your friends.
+#### 3. 在流形学中的应用
 
-Do It Live
-:   I'll let Bill O'Reilly [explain](https://www.youtube.com/watch?v=O_HyZ5aW76c "We'll Do It Live") this one.
+隐函数定理是**证明子流形存在性和构造其坐标卡的核心工具**。
 
-## Unordered Lists (Nested)
+一个常见的流形定义是作为另一个流形（通常是 \( \mathbb{R}^N \)）的**正则子流形**：即作为某个光滑映射的**正则值原像**。
 
-  * List item one 
-      * List item one 
-          * List item one
-          * List item two
-          * List item three
-          * List item four
-      * List item two
-      * List item three
-      * List item four
-  * List item two
-  * List item three
-  * List item four
+*   **定义**：设 \( F: M \to N \) 是光滑流形间的光滑映射。点 \( c \in N \) 称为 \( F \) 的**正则值**，如果对于所有 \( p \in F^{-1}(c) \)，微分 \( dF_p: T_pM \to T_{c}N \) 都是**满射**。
+*   **正则值原像定理**：如果 \( c \) 是 \( F: M \to N \) 的正则值，那么 \( F^{-1}(c) \) 是 \( M \) 的一个光滑子流形，且 \( \dim F^{-1}(c) = \dim M - \dim N \)。
 
-## Ordered List (Nested)
+**这个著名定理的证明，本质上就是隐函数定理的全局和几何化表述。**
 
-  1. List item one 
-      1. List item one 
-          1. List item one
-          2. List item two
-          3. List item three
-          4. List item four
-      2. List item two
-      3. List item three
-      4. List item four
-  2. List item two
-  3. List item three
-  4. List item four
+**证明思路（在 \( M = \mathbb{R}^{m+n}, N = \mathbb{R}^n \) 的特例下）：**
+假设 \( F: \mathbb{R}^{m+n} \to \mathbb{R}^n \) 满足 \( c=0 \) 是正则值。对于任意一点 \( p \in F^{-1}(0) \)，微分 \( dF_p \) 是满秩的（\( \text{rank} = n \)）。通过重新排列坐标（即选择 \( \mathbb{R}^{m+n} \) 中 \( n \) 个坐标，使得它们对应的 \( D_yF(p) \) 非奇异），我们可以将条件转化为隐函数定理的假设。
 
-## Buttons
+隐函数定理 then tells us that locally around \( p \), the set \( F^{-1}(0) \) is the graph of a smooth function \( y = f(x) \), where \( x \in \mathbb{R}^m, y \in \mathbb{R}^n \). **Being the graph of a smooth function is a perfect description of a smooth \( m \)-dimensional manifold.** The local coordinate chart is simply given by projecting onto the \( x \)-coordinates: \( \phi(x, f(x)) = x \).
 
-Make any link standout more when applying the `.btn` class.
+**例子**：
+*   **球面 \( S^n \)**: 定义为 \( F: \mathbb{R}^{n+1} \to \mathbb{R}, F(x) = \|x\|^2 - 1 = 0 \)。计算微分 \( dF_x(v) = 2x \cdot v \)。只要 \( x \neq 0 \)（即在球面上），这个微分是满射（秩为1）。因此，0是正则值，\( S^n = F^{-1}(0) \) 是一个 \( n \)-维流形。
+*   **特殊线性群 \( SL(n, \mathbb{R}) \)**: 定义为 \( \{ A \in M(n, \mathbb{R}) \mid \det(A) = 1 \} \)。可以看作映射 \( F: M(n, \mathbb{R}) \cong \mathbb{R}^{n^2} \to \mathbb{R}, F(A) = \det(A) - 1 \) 的原像。证明 \( d(\det)_A \) 在 \( SL(n, \mathbb{R}) \) 上满射，即可证明它是 \( n^2-1 \) 维流形。
 
-## Notices
+**总结：隐函数定理（通过正则值原像定理）为我们提供了一种强大而简洁的方法来验证一个几何对象是否是光滑子流形，并同时给出其局部坐标表示。**
 
-Basic notices or call-outs are supported using the following syntax:
+---
 
-```markdown
-**Watch out!** You can also add notices by appending `{: .notice}` to the line following paragraph.
-{: .notice}
-```
+### 综合与比较
 
-which wil render as:
+| 特征 | 反函数定理 | 隐函数定理 |
+| :--- | :--- | :--- |
+| **核心问题** | 映射的**局部可逆性** | 方程定义的**局部解存在性** |
+| **输入** | 一个映射 \( F: \mathbb{R}^n \to \mathbb{R}^n \) | 一个映射 \( F: \mathbb{R}^{m+n} \to \mathbb{R}^n \)（定义一个方程 \( F=0 \)） |
+| **条件** | \( DF(p) \) 可逆（满秩） | \( D_yF(p) \) 可逆（关于部分变量满秩） |
+| **几何结论** | \( F \) 是局部微分同胚 | 方程 \( F=0 \) 的解集是局部函数图像（即子流形） |
+| **在流形中的作用** | **构建流形自身的坐标卡** | **证明与构建子流形** |
 
-**Watch out!** You can also add notices by appending `{: .notice}` to the line following paragraph.
-{: .notice}
+**两者的深刻联系**：
+它们本质上是**同一个定理的两种不同表述**。隐函数定理可以推导出反函数定理，反之亦然。它们共同的核心思想是：**一个映射在一点附近的性态，由其在该点的微分（线性化）所主导，只要这个线性化是“非退化”的（即满秩）**。
 
-### Footnotes
-
-Footnotes can be useful for clarifying points in the text, or citing information.[^1] Markdown support numeric footnotes, as well as text as long as the values are unique.[^note]
-
-```markdown
-This is the regular text.[^1] This is more regular text.[^note]
-
-[^1]: This is the footnote itself.
-[^note]: This is another footnote.
-```
-
-[^1]: Such as this footnote.
-[^note]: When using text for footnotes markers, no spaces are permitted in the name.
-
-## HTML Tags
-
-### Address Tag
-
-<address>
-  1 Infinite Loop<br /> Cupertino, CA 95014<br /> United States
-</address>
-
-### Anchor Tag (aka. Link)
-
-This is an example of a [link](http://github.com "GitHub").
-
-### Abbreviation Tag
-
-The abbreviation CSS stands for "Cascading Style Sheets".
-
-*[CSS]: Cascading Style Sheets
-
-### Cite Tag
-
-"Code is poetry." ---<cite>Automattic</cite>
-
-### Code Tag
-
-You will learn later on in these tests that `word-wrap: break-word;` will be your best friend.
-
-You can also write larger blocks of code with syntax highlighting supported for some languages, such as Python:
-
-```python
-print('Hello World!')
-```
-
-or R:
-
-```R
-print("Hello World!", quote = FALSE)
-```
-
-### Details Tag (collapsible sections)
-
-The HTML `<details>` tag works well with Markdown and allows you to include collapsible sections, see [W3Schools](https://www.w3schools.com/tags/tag_details.asp) for more information on how to use the tag.
-
-<details>
-  <summary>Collapsed by default</summary>
-  This section was collapsed by default!
-</details>
-
-The source code:
-
-```HTML
-<details>
-  <summary>Collapsed by default</summary>
-  This section was collapsed by default!
-</details>
-```
-
-Or, you can leave a section open by default by including the `open` attribute in the tag:
-
-<details open>
-  <summary>Open by default</summary>
-  This section is open by default thanks to open in the &lt;details open&gt; tag!
-</details>
-
-
-### Emphasize Tag
-
-The emphasize tag should _italicize_ text.
-
-### Insert Tag
-
-This tag should denote <ins>inserted</ins> text.
-
-### Keyboard Tag
-
-This scarcely known tag emulates <kbd>keyboard text</kbd>, which is usually styled like the `<code>` tag.
-
-### Preformatted Tag
-
-This tag styles large blocks of code.
-
-<pre>
-.post-title {
-  margin: 0 0 5px;
-  font-weight: bold;
-  font-size: 38px;
-  line-height: 1.2;
-  and here's a line of some really, really, really, really long text, just to see how the PRE tag handles it and to find out how it overflows;
-}
-</pre>
-
-### Quote Tag
-
-<q>Developers, developers, developers&#8230;</q> &#8211;Steve Ballmer
-
-### Strike Tag
-
-This tag will let you <strike>strikeout text</strike>.
-
-### Strong Tag
-
-This tag shows **bold text**.
-
-### Subscript Tag
-
-Getting our science styling on with H<sub>2</sub>O, which should push the "2" down.
-
-### Superscript Tag
-
-Still sticking with science and Isaac Newton's E = MC<sup>2</sup>, which should lift the 2 up.
-
-### Variable Tag
-
-This allows you to denote <var>variables</var>.
-
-***
-**Footnotes**
-
-The footnotes in the page will be returned following this line, return to the section on <a href="#footnotes">Markdown Footnotes</a>.
+正是这两个定理，将微积分的局部线性思想完美地延伸到了非线性的几何领域，成为了微分流形理论不可或缺的基础。
